@@ -27,3 +27,42 @@ class CountdownTimer {
             alert('That`s it!')
         }
     }
+    pad(value){
+        return String(value).padStart(2,'0');
+    }
+getTimeComponents(time) {
+        const days = this.pad(Math.floor(time / (1000 * 60 * 60 * 24)));
+        const hours = this.pad(Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+        const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
+        const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
+        return { days, hours, mins, secs };
+    }
+    getRefs() {
+        const elementRef = document.querySelector(this.selector);
+        return {
+            days:elementRef.querySelector('[data-value="days"]'),
+            hours: elementRef.querySelector('[data-value="hours"]'),
+            mins: elementRef.querySelector('[data-value="mins"]'),
+            secs: elementRef.querySelector('[data-value="secs"]'),
+        }
+    }
+
+     updateTimerElements({days, hours, mins, secs}){
+        this.getRefs().days.textContent = `${days}`;
+        this.getRefs().hours.textContent = `${hours}`;
+        this.getRefs().mins.textContent = `${mins}`;
+        this.getRefs().secs.textContent = `${secs}`;
+    }
+
+    
+}
+
+new CountdownTimer({
+    selector: '#timer-1',
+    targetDate: new Date('June 28 2021 19:13:00'),
+});
+
+new CountdownTimer({
+    selector: '#timer-2',
+    targetDate: new Date('June 27 2022'),
+});
